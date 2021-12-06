@@ -1,0 +1,93 @@
+<%- include('./template/cabecera',{tituloWeb:'Detalle Clientes'}) %>
+    <div class="container" >
+        <h1 align="center" class="text-dark">Datos Clientes</h1>
+        <% if (error) { %>
+            <p>
+                <%= mensaje %>
+            </p>
+            <a href="/clientes" class="btn btn-dark btn-block">Volver a Clientes</a>
+            <% } %>
+                <% if (!error) { %>
+
+                    <form id="formularioEditar" data-id="<%= cliente.id %> ">
+                      <input type="text" class="form-control my-2" name="nombre" value="<%= cliente.nombre %> " id="nombreInput" > 
+                      <input type="text" class="form-control my-2" name="apellidos" value="<%= cliente.apellidos %> " id="apellidosInput" >
+                      <input type="text" class="form-control my-2" name="cel" value="<%= cliente.cel %> " id="celInput" > 
+                      <button type="submit"
+                        class="btn btn-warning btn-block"  >
+                      Editar Cliente
+                    </button>  
+
+                    </form>
+                    
+                    <hr>
+                                <button 
+                                    class="btn btn-danger btn-sm mt-2"
+                                    id="btnEliminar"
+                                    data-id="<%= cliente.id %> "    >
+                                    Eliminar
+                                </button>
+
+                    <% } %>
+    </div>
+
+
+
+
+    <%- include('./template/footer'); %>
+
+    <script>
+        // Aqui se captura lo que trae el boton eliminar  id = btnEliminar
+       const btnEliminar = document.querySelector('#btnEliminar') 
+       btnEliminar.addEventListener('click',async()=>{
+           console.log('haz dado click')//Aqui nos muestra en consola de navegador el mensaje cuando presionamos el botón
+           const id = btnEliminar.dataset.id
+           console.log('id', id)//Aqui nos pinta en consola del navegador el valor de lo que voy a eliminar
+           try {
+               const data = await fetch(`/clientes/${id}`,{
+                   method : 'delete'
+               })
+             const res = await data.json() 
+             //console.log(res)
+             if (res.estado) {
+                 window.location.href = '/clientes'
+             }else{
+                 console.log(res)
+             }
+           } catch (error) {
+               console.log(error)
+           }
+           
+       })
+       //Codgio de editar el dato en la base datos para unir con la ruta y el modelo
+       const formularioEditar = document.querySelector('#formularioEditar')
+       formularioEditar.addEventListener('submit', async(e)=>{
+           e.preventDefault()
+           //console.log('submit')Aqui  probamos que el formulario Editar  traiga el submit
+           const nombre = formularioEditar.elements['nombre'].value
+           const apellidos = document.querySelector('#apellidosInput').value
+           const cel = document.querySelector('#celInput').value
+           const id = formularioEditar.dataset.id
+          // console.log(nombre, apellidos, cel, id) probamos que los datos estan cargando para editar
+          try {
+              const data = await fetch(`/clientes/${id} `,{
+                  method : 'put',
+                  headers : {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({nombre, apellidos, cel})
+              })
+              const res = await data.json()
+              if (res.estado) {
+                    window.location.href = '/clientes'
+              } else {
+                  console.log(res)
+              }
+              console.log(res)
+          } catch (error) {
+              console.log(error)
+          }
+       })
+
+    </script>
+

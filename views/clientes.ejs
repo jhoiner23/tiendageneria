@@ -1,0 +1,49 @@
+<%- include('./template/cabecera',{tituloWeb:'Clientes'}) %>
+    <div class="container">
+        <h1 align="center" class="text-dark">Datos Clientes</h1>
+        <a class="btn btn-success btn-block my-4" href="/clientes/crear">
+            Crear Nuevo Cliente
+        </a>
+        <link rel="stylesheet" href="/css/estilos.css">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"># Id</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (arrayClientes.length> 0) { %>
+                    <% arrayClientes.forEach(cliente=> { %>
+                        <tr>
+                            <th scope="row">
+                                <%= cliente.id %>
+                            </th>
+                            <td>
+                                <%= cliente.nombre %>
+                            </td>
+                            <td>
+                                <%= cliente.apellidos %>
+                            </td>
+                            <td>
+                                <%= cliente.cel %>
+                            </td>
+                            <td><a href="clientes/<%= cliente.id %>"
+                                class="btn btn-warning btn-sm">Editar</a></td>
+                        </tr>
+
+                        <% }) %>
+                            <% } %>
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <%- include('./template/footer'); %>

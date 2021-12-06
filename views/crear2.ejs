@@ -1,0 +1,39 @@
+<%- include('./template/cabecera',{tituloWeb:'Crear Clientes'}) %>
+
+
+    <h1 align="center">Crear Cliente</h1>
+   <div class="container">
+    <form action="/clientes" method="post">
+        <input type="text"
+        placeholder="Agregar Nombres del usuarios"
+        class="form-control my-2"
+        name="nombre">
+
+        <input type="text"
+        placeholder="Agregar Apellidos del usuarios"
+        class="form-control my-2"
+        name="apellidos">
+
+        <input type="text"
+        placeholder="Agregar Número cedula del usuarios"
+        class="form-control my-2"
+        name="ced">
+        <input type="text"
+        placeholder="Agregar direcccion del usuarios"
+        class="form-control my-2"
+        name="der">
+        <input type="text"
+        placeholder="Agregar telefono del usuarios"
+        class="form-control my-2"
+        name="tel">
+        <button type="submit"
+        class="btn btn-success btn-block">
+            Agregar Cliente
+        </button>
+
+    </form>
+
+   </div>
+
+
+<%- include('./template/footer'); %>
